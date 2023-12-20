@@ -26,6 +26,7 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
         Object bean =  null;
         try {
             bean = createBeanInstance(beanDefinition,beanName,args);
+            //TODO  bean填充属性
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -50,6 +51,8 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
                 .orElse(null);
         return getInstantiationStrategy().instantiate(beanDefinition,beanName,constructorToUse,args);
     }
+
+
 
     public InstantiationStrategy getInstantiationStrategy() {
         return instantiationStrategy;
