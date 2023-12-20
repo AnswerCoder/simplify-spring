@@ -26,4 +26,13 @@ public interface BeanFactory {
      * @throws BeansException
      */
     Object getBean(String name) throws BeansException;
+
+    /**
+     * 获取Bean
+     * @param name
+     * @param args
+     * @return
+     * @throws BeansException
+     */
+    Object getBean(String name, Object ...args) throws BeansException;
 }

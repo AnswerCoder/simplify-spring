@@ -6,6 +6,7 @@
 IOC:
 - [x] 简单Bean容器
 - [x] Bean的定义、注册、获取
+- [x] 基于Cglib实现含构造函数的类实例化策略
 ### 参考
 - [fuzhengwei/small-spring](https://github.com/fuzhengwei/small-spring)
 - [DerekYRC/mini-spring](https://github.com/DerekYRC/mini-spring)
