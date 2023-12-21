@@ -5,10 +5,10 @@ import top.peng.simplifyspring.bean.UserDao;
 import top.peng.simplifyspring.bean.UserService;
 import top.peng.simplifyspring.beans.PropertyValue;
 import top.peng.simplifyspring.beans.PropertyValues;
-import top.peng.simplifyspring.beans.factory.BeanFactory;
 import top.peng.simplifyspring.beans.factory.config.BeanDefinition;
 import top.peng.simplifyspring.beans.factory.config.BeanReference;
 import top.peng.simplifyspring.beans.factory.support.DefaultListableBeanFactory;
+import top.peng.simplifyspring.beans.factory.xml.XmlBeanDefinitionReader;
 
 /**
  * ApiTest
@@ -34,6 +34,21 @@ public class ApiTest {
         //UserService 注入Bean
         BeanDefinition beanDefinition = new BeanDefinition(UserService.class,propertyValues);
         beanFactory.registerBeanDefinition("userService",beanDefinition);
+
+        //UserService获取bean
+        UserService userService = (UserService) beanFactory.getBean("userService");
+        userService.getUserInfo();
+    }
+
+
+    @Test
+    public void testBeanByXml(){
+        //初始化Bean Factory
+        DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
+
+        //读取配置文件&注册Bean
+        XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(beanFactory);
+        reader.loadBeanDefinitions("classpath:spring.xml");
 
         //UserService获取bean
         UserService userService = (UserService) beanFactory.getBean("userService");

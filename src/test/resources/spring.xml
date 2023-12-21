@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans>
+    <bean id="userDao" class="top.peng.simplifyspring.bean.UserDao" />
+
+    <bean id="userService" class="top.peng.simplifyspring.bean.UserService">
+        <property name="uId" value="10001"/>
+        <property name="userDao" ref="userDao"/>
+    </bean>
+</beans>

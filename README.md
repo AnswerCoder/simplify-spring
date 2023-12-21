@@ -8,6 +8,8 @@ IOC:
 - [x] Bean的定义、注册、获取
 - [x] 基于Cglib实现含构造函数的类实例化策略
 - [x] 为bean对象注入属性和其他依赖对象
+- [x] 资源加载器解析文件,注册对象
+  - 从spring.xml解析和注册Bean对象
 ### 参考
 - [fuzhengwei/small-spring](https://github.com/fuzhengwei/small-spring)
 - [DerekYRC/mini-spring](https://github.com/DerekYRC/mini-spring)
