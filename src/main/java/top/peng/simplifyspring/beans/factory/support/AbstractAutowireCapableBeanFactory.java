@@ -5,8 +5,12 @@
  */
 package top.peng.simplifyspring.beans.factory.support;
 
+import cn.hutool.core.bean.BeanUtil;
 import top.peng.simplifyspring.beans.BeansException;
+import top.peng.simplifyspring.beans.PropertyValue;
+import top.peng.simplifyspring.beans.PropertyValues;
 import top.peng.simplifyspring.beans.factory.config.BeanDefinition;
+import top.peng.simplifyspring.beans.factory.config.BeanReference;
 
 import java.lang.reflect.Constructor;
 import java.util.Arrays;
@@ -26,7 +30,8 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
         Object bean =  null;
         try {
             bean = createBeanInstance(beanDefinition,beanName,args);
-            //TODO  bean填充属性
+            //bean填充属性
+            applyPropertyValues(beanName,bean,beanDefinition);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -52,6 +57,24 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
         return getInstantiationStrategy().instantiate(beanDefinition,beanName,constructorToUse,args);
     }
 
+    protected void applyPropertyValues(String beanName, Object bean, BeanDefinition beanDefinition){
+        try {
+            PropertyValues propertyValues = beanDefinition.getPropertyValues();
+            for (PropertyValue propertyValue : propertyValues.getPropertyValues()){
+                String name = propertyValue.getName();
+                Object value = propertyValue.getValue();
+
+                if (value instanceof BeanReference){
+                    BeanReference beanReference = (BeanReference) value;
+                    value = getBean(beanReference.getBeanName());
+                }
+                //填充属性
+                BeanUtil.setFieldValue(bean,name,value);
+            }
+        } catch (BeansException e) {
+            throw new BeansException("Error setting property values：" + beanName);
+        }
+    }
 
 
     public InstantiationStrategy getInstantiationStrategy() {
