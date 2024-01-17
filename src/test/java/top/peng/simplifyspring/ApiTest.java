@@ -9,6 +9,9 @@ import top.peng.simplifyspring.beans.factory.config.BeanDefinition;
 import top.peng.simplifyspring.beans.factory.config.BeanReference;
 import top.peng.simplifyspring.beans.factory.support.DefaultListableBeanFactory;
 import top.peng.simplifyspring.beans.factory.xml.XmlBeanDefinitionReader;
+import top.peng.simplifyspring.common.MyBeanFactoryPostProcessor;
+import top.peng.simplifyspring.common.MyBeanPostProcessor;
+import top.peng.simplifyspring.context.support.ClassPathXmlApplicationContext;
 
 /**
  * ApiTest
@@ -42,7 +45,7 @@ public class ApiTest {
 
 
     @Test
-    public void testBeanByXml(){
+    public void testBeanFactoryPostProcessorAndBeanPostProcessor(){
         //初始化Bean Factory
         DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
 
@@ -50,8 +53,27 @@ public class ApiTest {
         XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(beanFactory);
         reader.loadBeanDefinitions("classpath:spring.xml");
 
+        //BeanDefinition 加载完成 & Bean实例化之前，修改 BeanDefinition 的属性值
+        MyBeanFactoryPostProcessor beanFactoryPostProcessor = new MyBeanFactoryPostProcessor();
+        beanFactoryPostProcessor.postProcessBeanFactory(beanFactory);
+
+        //Bean实例化之后，修改 Bean 属性信息
+        MyBeanPostProcessor beanPostProcessor = new MyBeanPostProcessor();
+        beanFactory.addBeanPostProcessor(beanPostProcessor);
+
         //UserService获取bean
         UserService userService = (UserService) beanFactory.getBean("userService");
-        userService.getUserInfo();
+        String userInfo = userService.getUserInfo();
+        System.out.println(userInfo);
+    }
+
+    @Test
+    public void testApplicationContextXml(){
+        // 1.初始化 BeanFactory
+        ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:springPostProcessor.xml");
+        // 2. 获取Bean对象调用方法
+        UserService userService = applicationContext.getBean("userService", UserService.class);
+        String userInfo = userService.getUserInfo();
+        System.out.println(userInfo);
     }
 }

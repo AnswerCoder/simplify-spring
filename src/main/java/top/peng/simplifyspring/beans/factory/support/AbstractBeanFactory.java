@@ -8,6 +8,11 @@ package top.peng.simplifyspring.beans.factory.support;
 import top.peng.simplifyspring.beans.BeansException;
 import top.peng.simplifyspring.beans.factory.BeanFactory;
 import top.peng.simplifyspring.beans.factory.config.BeanDefinition;
+import top.peng.simplifyspring.beans.factory.config.BeanPostProcessor;
+import top.peng.simplifyspring.beans.factory.config.ConfigurableBeanFactory;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * AbstractBeanFactory
@@ -15,7 +20,9 @@ import top.peng.simplifyspring.beans.factory.config.BeanDefinition;
  * @author yunpeng.zhang
  * @version 1.0 2023/12/19
  */
-public abstract class AbstractBeanFactory extends DefaultSingletonBeanRegistry implements BeanFactory {
+public abstract class AbstractBeanFactory extends DefaultSingletonBeanRegistry implements ConfigurableBeanFactory {
+
+    private final List<BeanPostProcessor> beanPostProcessors = new ArrayList<>();
 
     @Override
     public Object getBean(String name) throws BeansException {
@@ -44,4 +51,14 @@ public abstract class AbstractBeanFactory extends DefaultSingletonBeanRegistry i
     protected abstract BeanDefinition getBeanDefinition(String beanName) throws BeansException;
 
     protected abstract Object creatBean(String beanName, BeanDefinition beanDefinition, Object[] args) throws BeansException;
+
+    @Override
+    public void addBeanPostProcessor(BeanPostProcessor beanPostProcessor) {
+        this.beanPostProcessors.remove(beanPostProcessor);
+        this.beanPostProcessors.add(beanPostProcessor);
+    }
+
+    public List<BeanPostProcessor> getBeanPostProcessors(){
+        return this.beanPostProcessors;
+    }
 }

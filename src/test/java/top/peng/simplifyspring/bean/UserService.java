@@ -14,11 +14,13 @@ package top.peng.simplifyspring.bean;
 public class UserService {
 
     private String uId;
+    private String company;
+    private String location;
 
     private UserDao userDao;
 
-    public void getUserInfo(){
-        System.out.println("获取用户信息" + userDao.queryUserName(uId));
+    public String getUserInfo(){
+        return userDao.queryUserName(uId) + ", company: " + company + ", location:" + location;
     }
 
     public String getuId() {
@@ -27,6 +29,22 @@ public class UserService {
 
     public void setuId(String uId) {
         this.uId = uId;
+    }
+
+    public String getCompany() {
+        return company;
+    }
+
+    public void setCompany(String company) {
+        this.company = company;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
     }
 
     public UserDao getUserDao() {

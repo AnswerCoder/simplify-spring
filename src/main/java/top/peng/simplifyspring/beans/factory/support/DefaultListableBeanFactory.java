@@ -8,6 +8,7 @@ package top.peng.simplifyspring.beans.factory.support;
 import top.peng.simplifyspring.beans.BeansException;
 import top.peng.simplifyspring.beans.factory.ConfigurableListableBeanFactory;
 import top.peng.simplifyspring.beans.factory.config.BeanDefinition;
+import top.peng.simplifyspring.beans.factory.config.BeanPostProcessor;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -56,5 +57,10 @@ public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFacto
     @Override
     public String[] getBeanDefinitionNames() {
         return beanDefinitionMap.keySet().toArray(new String[0]);
+    }
+
+    @Override
+    public void preInstantiateSingletons() throws BeansException {
+        beanDefinitionMap.keySet().forEach(this::getBean);
     }
 }
