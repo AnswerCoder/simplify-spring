@@ -5,8 +5,10 @@
  */
 package top.peng.simplifyspring.bean;
 
-import top.peng.simplifyspring.beans.factory.DisposableBean;
-import top.peng.simplifyspring.beans.factory.InitializingBean;
+import top.peng.simplifyspring.beans.BeansException;
+import top.peng.simplifyspring.beans.factory.*;
+import top.peng.simplifyspring.context.ApplicationContext;
+import top.peng.simplifyspring.context.ApplicationContextAware;
 
 /**
  * UserService
@@ -14,8 +16,10 @@ import top.peng.simplifyspring.beans.factory.InitializingBean;
  * @author yunpeng.zhang
  * @version 1.0 2023/12/19
  */
-public class UserService implements InitializingBean, DisposableBean {
+public class UserService implements BeanFactoryAware, BeanClassLoaderAware, BeanNameAware, ApplicationContextAware {
 
+    private BeanFactory beanFactory;
+    private ApplicationContext applicationContext;
 
     private String uId;
     private String company;
@@ -24,17 +28,35 @@ public class UserService implements InitializingBean, DisposableBean {
     private UserDao userDao;
 
     @Override
-    public void destroy() throws Exception {
-        System.out.println("执行：UserService.destroy");
+    public void setClassLoader(ClassLoader classLoader) {
+        System.out.println("ClassLoader: " + classLoader);
     }
 
     @Override
-    public void afterPropertiesSet() throws Exception {
-        System.out.println("执行：UserService.afterPropertiesSet");
+    public void setBeanFactory(BeanFactory beanFactory) throws BeansException {
+        this.beanFactory = beanFactory;
+    }
+
+    @Override
+    public void setBeanName(String name) {
+        System.out.println("Bean Name is：" + name);
+    }
+
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+        this.applicationContext = applicationContext;
     }
 
     public String getUserInfo(){
         return userDao.queryUserName(uId) + ", company: " + company + ", location:" + location;
+    }
+
+    public BeanFactory getBeanFactory() {
+        return beanFactory;
+    }
+
+    public ApplicationContext getApplicationContext() {
+        return applicationContext;
     }
 
     public String getuId() {
