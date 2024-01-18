@@ -17,10 +17,16 @@ import java.util.Map;
 public class UserDao {
     private static final Map<String, String> hashMap = new HashMap<>();
 
-    static {
+    public void initDataMethod(){
+        System.out.println("执行：init-method");
         hashMap.put("10001", "zzzz");
         hashMap.put("10002", "aaaa");
         hashMap.put("10003", "bbbb");
+    }
+
+    public void destroyDataMethod(){
+        System.out.println("执行：destroy-method");
+        hashMap.clear();
     }
 
     public String queryUserName(String uId) {

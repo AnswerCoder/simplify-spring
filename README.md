@@ -11,6 +11,7 @@ IOC:
 - [x] 资源加载器解析文件,注册对象
   - 从spring.xml解析和注册Bean对象
 - [x] 实现应用上下文
+- [x] 初始化和销毁方法
 ### 参考
 - [fuzhengwei/small-spring](https://github.com/fuzhengwei/small-spring)
 - [DerekYRC/mini-spring](https://github.com/DerekYRC/mini-spring)

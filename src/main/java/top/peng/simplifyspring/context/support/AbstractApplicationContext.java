@@ -113,4 +113,20 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader i
     public String[] getBeanDefinitionNames() {
         return getBeanFactory().getBeanDefinitionNames();
     }
+
+    /**
+     * 注册虚拟机钩子
+     */
+    @Override
+    public void registerShutdownHook() {
+        Runtime.getRuntime().addShutdownHook(new Thread(this::close));
+    }
+
+    /**
+     * 手动执行关闭
+     */
+    @Override
+    public void close() {
+        getBeanFactory().destroySingletons();
+    }
 }
