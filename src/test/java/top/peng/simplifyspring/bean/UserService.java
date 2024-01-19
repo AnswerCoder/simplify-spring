@@ -16,18 +16,20 @@ import top.peng.simplifyspring.context.ApplicationContextAware;
  * @author yunpeng.zhang
  * @version 1.0 2023/12/19
  */
-public class UserService implements BeanFactoryAware, BeanClassLoaderAware, BeanNameAware, ApplicationContextAware {
+public class UserService
+        //implements BeanFactoryAware, BeanClassLoaderAware, BeanNameAware, ApplicationContextAware
+{
 
-    private BeanFactory beanFactory;
-    private ApplicationContext applicationContext;
+    /*private BeanFactory beanFactory;
+    private ApplicationContext applicationContext;*/
 
     private String uId;
     private String company;
     private String location;
 
-    private UserDao userDao;
+    private IUserDao userDao;
 
-    @Override
+    /*@Override
     public void setClassLoader(ClassLoader classLoader) {
         System.out.println("ClassLoader: " + classLoader);
     }
@@ -45,19 +47,19 @@ public class UserService implements BeanFactoryAware, BeanClassLoaderAware, Bean
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
         this.applicationContext = applicationContext;
-    }
+    }*/
 
     public String getUserInfo(){
         return userDao.queryUserName(uId) + ", company: " + company + ", location:" + location;
     }
 
-    public BeanFactory getBeanFactory() {
+    /*public BeanFactory getBeanFactory() {
         return beanFactory;
     }
 
     public ApplicationContext getApplicationContext() {
         return applicationContext;
-    }
+    }*/
 
     public String getuId() {
         return uId;
@@ -83,11 +85,11 @@ public class UserService implements BeanFactoryAware, BeanClassLoaderAware, Bean
         this.location = location;
     }
 
-    public UserDao getUserDao() {
+    public IUserDao getUserDao() {
         return userDao;
     }
 
-    public void setUserDao(UserDao userDao) {
+    public void setUserDao(IUserDao userDao) {
         this.userDao = userDao;
     }
 }

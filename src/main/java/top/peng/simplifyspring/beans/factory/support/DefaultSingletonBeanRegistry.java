@@ -20,6 +20,7 @@ import java.util.Set;
  * @version 1.0 2023/12/19
  */
 public class DefaultSingletonBeanRegistry implements SingletonBeanRegistry {
+    protected static final Object NULL_OBJECT = new Object();
 
     private Map<String, Object> singletonObjects = new HashMap<>();
 

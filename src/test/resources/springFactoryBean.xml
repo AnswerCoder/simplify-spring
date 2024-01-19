@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans>
+    <bean id="userService" class="top.peng.simplifyspring.bean.UserService" scope="singleton">
+        <property name="uId" value="10001"/>
+        <property name="company" value="tencent"/>
+        <property name="location" value="shenzhen"/>
+        <property name="userDao" ref="proxyUserDao"/>
+    </bean>
+
+    <bean id="proxyUserDao" class="top.peng.simplifyspring.bean.ProxyBeanFactory"/>
+</beans>

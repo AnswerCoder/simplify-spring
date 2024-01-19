@@ -88,6 +88,8 @@ public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
             String initMethod = bean.getAttribute("init-method");
             String destroyMethodName = bean.getAttribute("destroy-method");
 
+            String beanScope = bean.getAttribute("scope");
+
             //获取Class
             Class<?> clazz = Class.forName(className);
             // 优先级 id > name
@@ -100,6 +102,10 @@ public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
             //额外设置到beanDefinition中
             beanDefinition.setInitMethodName(initMethod);
             beanDefinition.setDestroyMethodName(destroyMethodName);
+
+            if (StrUtil.isNotEmpty(beanScope)){
+                beanDefinition.setScope(beanScope);
+            }
 
             if (getRegistry().containsBeanDefinition(beanName)){
                 throw new BeansException("Duplicate beanName[" + beanName + "] is not allowed");

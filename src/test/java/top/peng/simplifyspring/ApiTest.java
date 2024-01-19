@@ -1,6 +1,7 @@
 package top.peng.simplifyspring;
 
 import org.junit.Test;
+import org.openjdk.jol.info.ClassLayout;
 import top.peng.simplifyspring.bean.UserDao;
 import top.peng.simplifyspring.bean.UserService;
 import top.peng.simplifyspring.beans.PropertyValue;
@@ -76,7 +77,39 @@ public class ApiTest {
         UserService userService = applicationContext.getBean("userService", UserService.class);
         String userInfo = userService.getUserInfo();
         System.out.println(userInfo);
-        System.out.println("ApplicationContextAware："+userService.getApplicationContext());
-        System.out.println("BeanFactoryAware："+userService.getBeanFactory());
+        /*System.out.println("ApplicationContextAware："+userService.getApplicationContext());
+        System.out.println("BeanFactoryAware："+userService.getBeanFactory());*/
+    }
+
+    @Test
+    public void textPrototype(){
+        // 1.初始化 BeanFactory
+        ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:springFactoryBean.xml");
+        applicationContext.registerShutdownHook();
+
+        // 2. 获取Bean对象调用方法
+        UserService userService01 = applicationContext.getBean("userService", UserService.class);
+        UserService userService02 = applicationContext.getBean("userService", UserService.class);
+
+        // 3. 配置 scope="prototype/singleton"
+        System.out.println(userService01);
+        System.out.println(userService02);
+
+        // 4. 打印十六进制哈希
+        System.out.println(userService01 + " 十六进制哈希：" + Integer.toHexString(userService01.hashCode()));
+        System.out.println(ClassLayout.parseInstance(userService01).toPrintable());
+    }
+
+    @Test
+    public void textFactoryBean(){
+        // 1.初始化 BeanFactory
+        ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:springFactoryBean.xml");
+        applicationContext.registerShutdownHook();
+
+        // 2. 获取Bean对象调用方法
+        UserService userService = applicationContext.getBean("userService", UserService.class);
+
+        // 3. 调用代理方法
+        System.out.println(userService.getUserInfo());
     }
 }
