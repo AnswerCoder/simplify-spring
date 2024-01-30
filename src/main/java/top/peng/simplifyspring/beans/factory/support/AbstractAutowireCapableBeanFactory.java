@@ -48,7 +48,7 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 
         //只有单例模式的对象需要存放到内存中; 原型模式不会存放到内存中，每次获取都重新创建对象
         if(beanDefinition.isSingleton()){
-            addSingleton(beanName, bean);
+            registerSingleton(beanName, bean);
         }
 
         return bean;

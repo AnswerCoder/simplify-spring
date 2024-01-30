@@ -13,6 +13,7 @@ import top.peng.simplifyspring.beans.factory.xml.XmlBeanDefinitionReader;
 import top.peng.simplifyspring.common.MyBeanFactoryPostProcessor;
 import top.peng.simplifyspring.common.MyBeanPostProcessor;
 import top.peng.simplifyspring.context.support.ClassPathXmlApplicationContext;
+import top.peng.simplifyspring.event.CustomEvent;
 
 /**
  * ApiTest
@@ -111,5 +112,12 @@ public class ApiTest {
 
         // 3. 调用代理方法
         System.out.println(userService.getUserInfo());
+    }
+
+    @Test
+    public void testEvent(){
+        ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:springEvent.xml");
+        applicationContext.publishEvent(new CustomEvent(applicationContext,1232324214L,"SUCCESS"));
+        applicationContext.registerShutdownHook();
     }
 }

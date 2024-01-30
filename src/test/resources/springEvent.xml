@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans>
+    <bean class="top.peng.simplifyspring.event.ContextRefreshedEventListener"/>
+    <bean class="top.peng.simplifyspring.event.CustomEventListener"/>
+    <bean class="top.peng.simplifyspring.event.ContextClosedEventListener"/>
+</beans>

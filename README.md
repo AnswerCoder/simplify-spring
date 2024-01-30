@@ -14,6 +14,7 @@ IOC:
 - [x] 初始化和销毁方法
 - [x] Aware感知容器对象
 - [x] 对象作用域和FactoryBean
+- [x] 容器事件和事件监听器
 ### 参考
 - [fuzhengwei/small-spring](https://github.com/fuzhengwei/small-spring)
 - [DerekYRC/mini-spring](https://github.com/DerekYRC/mini-spring)
